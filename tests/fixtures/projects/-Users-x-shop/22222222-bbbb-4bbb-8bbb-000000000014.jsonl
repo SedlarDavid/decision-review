@@ -1,0 +1,2 @@
+{"type":"user","sessionId":"x","gitBranch":"fix/small","message":{"role":"user","content":"fix typo"}}
+{"type":"pr-link","sessionId":"x","prNumber":14,"prUrl":"https://github.com/acme/shop/pull/14","prRepository":"acme/shop"}

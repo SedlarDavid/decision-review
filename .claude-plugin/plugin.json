@@ -1,0 +1,10 @@
+{
+  "name": "decision-review",
+  "version": "0.1.0",
+  "description": "Review the decisions an agent made in a PR, not the code: a cited decision ledger (intent, decisions, behavior changes, explicit unchanged assertions, test evidence, scope) built from the PR diff, plan, session transcripts and review findings, then a Confirm / Reject / Explain / Develop triage.",
+  "author": {
+    "name": "David Sedlar"
+  },
+  "license": "MIT",
+  "keywords": ["code-review", "pull-request", "decisions", "transcripts", "skills"]
+}

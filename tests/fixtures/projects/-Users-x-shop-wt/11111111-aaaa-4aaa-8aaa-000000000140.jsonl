@@ -1,0 +1,32 @@
+{"type":"ai-title","aiTitle":"stock","sessionId":"x"}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":"backend says stock is always Sold out for regular users"}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"text","text":"Base directory for this skill: /x"}]},"isMeta":true}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t1","name":"Bash","input":{"command":"curl -s -H 'Authorization: Bearer abcdef1234567890XYZ' https://stg.example/api/product/1/availability"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t1","content":"{\"available\": 3}"}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t2","name":"Bash","input":{"command":"ls lib"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t2","content":"a.dart"}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t3","name":"Edit","input":{"file_path":"/repo/lib/api.dart","old_string":"a","new_string":"b"}}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t3b","name":"Edit","input":{"file_path":"/repo/lib/api.dart","old_string":"b","new_string":"c"}}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t4","name":"Write","input":{"file_path":"/repo/test/api_test.dart","content":"x"}}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t5","name":"Bash","input":{"command":"fvm flutter test test/api_test.dart"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t5","content":"Exit code 1\nSome tests failed","is_error":true}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t6","name":"Bash","input":{"command":"fvm flutter test && fvm flutter analyze"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t6","content":"All tests passed"}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t7","name":"mcp__mobile-mcp__mobile_take_screenshot","input":{}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t7","content":[{"type":"text","text":"screenshot taken"}]}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t8","name":"mcp__mobile-mcp__mobile_take_screenshot","input":{}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t8","content":[{"type":"text","text":"screenshot taken"}]}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t9","name":"mcp__mobile-mcp__mobile_click_on_screen_at_coordinates","input":{"x":1}}]}}
+{"type":"pr-link","sessionId":"x","prNumber":140,"prUrl":"https://github.com/acme/shop/pull/140","prRepository":"acme/shop"}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":"<command-message>vgv-wingspan:review</command-message>\n<command-name>/vgv-wingspan:review</command-name>\n<command-args></command-args>"}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":"<task-notification>\n<task-id>x</task-id></task-notification>"}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"text","text":"Review done.\n- FINDING-01: no control test for the stock gate\n- FINDING-02: a failed stock fetch shows Sold out\nOther text"}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t10","name":"AskUserQuestion","input":{"questions":[{"question":"FINDING-02: when the stock check fails, what should Aktivovat do?","header":"Failed check","options":[{"label":"Enable, let BE decide (Recommended)"},{"label":"Keep"}],"multiSelect":false}]}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t10","content":"Your questions have been answered: \"FINDING-02: when the stock check fails, what should Aktivovat do?\"=\"Enable, let BE decide (Recommended)\". You can now continue."}]},"toolUseResult":{"questions":[],"answers":{"FINDING-02: when the stock check fails, what should Aktivovat do?":"Enable, let BE decide (Recommended)"},"annotations":{"FINDING-02: when the stock check fails, what should Aktivovat do?":{"notes":"also report to Sentry"}}}}
+{"type":"pr-link","sessionId":"x","prNumber":140,"prUrl":"https://github.com/acme/shop/pull/140","prRepository":"acme/shop"}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":"export GH_TOKEN=__GH_TOKEN__ and key __SK_KEY__, STORE_PASSWORD=hunter2secret, \"api_key\": \"zzz999\""}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":"here is the key __PEM_BEGIN__\nMIIEowIBAAKCAQEA\nabc\n__PEM_END__ done"}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t11","name":"Skill","input":{"skill":"vgv-wingspan:build","args":"docs/plan/x.md"}}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/stock","message":{"role":"assistant","content":[{"type":"tool_use","id":"t12","name":"Bash","input":{"command":"gh pr create --title 'fix stock'"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/stock","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t12","content":"https://github.com/acme/shop/pull/140"}]}}
+{"type":"pr-link","sessionId":"x","prNumber":140,"prUrl":"https://github.com/acme/shop/pull/140","prRepository":"acme/shop"}

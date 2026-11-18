@@ -1,0 +1,15 @@
+{
+  "name": "decision-review",
+  "owner": {
+    "name": "David Sedlar"
+  },
+  "description": "Review the decisions an agent made in a PR, not the code.",
+  "plugins": [
+    {
+      "name": "decision-review",
+      "description": "Review the decisions an agent made in a PR, not the code: cited decision ledger from the diff, plan, session transcripts and review findings, then Confirm / Reject / Explain / Develop triage.",
+      "source": "./",
+      "category": "development"
+    }
+  ]
+}

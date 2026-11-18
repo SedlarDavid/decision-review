@@ -1,0 +1,2 @@
+{"type":"user","sessionId":"x","gitBranch":"feat/orphan","message":{"role":"user","content":"orphan work"}}
+{"type":"user","sessionId":"x","gitBranch":"main","message":{"role":"user","content":"on main"}}

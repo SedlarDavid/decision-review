@@ -1,0 +1,10 @@
+{"type":"user","sessionId":"x","gitBranch":"feat/one","message":{"role":"user","content":"build feature one"}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/one","message":{"role":"assistant","content":[{"type":"tool_use","id":"m1","name":"Bash","input":{"command":"npm test"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/one","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"m1","content":"ok"}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/one","message":{"role":"assistant","content":[{"type":"text","text":"FINDING-07: one only"}]}}
+{"type":"pr-link","sessionId":"x","prNumber":200,"prUrl":"https://github.com/acme/multi/pull/200","prRepository":"acme/multi"}
+{"type":"user","sessionId":"x","gitBranch":"feat/two","message":{"role":"user","content":"now feature two"}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/two","message":{"role":"assistant","content":[{"type":"tool_use","id":"m2","name":"Bash","input":{"command":"pytest -q"}}]}}
+{"type":"user","sessionId":"x","gitBranch":"feat/two","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"m2","content":"Exit code 2\nfail","is_error":true}]}}
+{"type":"assistant","sessionId":"x","gitBranch":"feat/two","message":{"role":"assistant","content":[{"type":"text","text":"FINDING-09: two only"}]}}
+{"type":"pr-link","sessionId":"x","prNumber":201,"prUrl":"https://github.com/acme/multi/pull/201","prRepository":"acme/multi"}
