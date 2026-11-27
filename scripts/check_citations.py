@@ -13,6 +13,9 @@ is appended to the heading), and the failing citation is tagged `(not found)`.
 On `Evidence:` lines, a backticked `path:line` (or `path:a-b`) without a well-formed
 double-quoted snippet counts as a failure too ("no checkable snippet"), so a near-miss
 format can't leave an item ✅ unchecked. An item already marked UNVERIFIED keeps its one marker.
+
+It also counts the items under `## Needs your call` (before the collapsed FYI block). More than
+10 → the split note is added under that heading if the ledger lacks it, and printed.
 A summary goes to stdout. Exit status is always 0: failures are reported, not fatal.
 """
 import argparse
@@ -29,6 +32,9 @@ VERIFIED = "✅ verified"
 UNVERIFIED = "❓ UNVERIFIED (citation not found)"
 ANY_UNVERIFIED = "❓ UNVERIFIED"
 NOT_FOUND = " (not found)"
+CALLS_HEADING = re.compile(r"^## Needs your call\s*$")
+SPLIT_LIMIT = 10
+SPLIT_LINE = "More than %d calls — consider splitting this PR." % SPLIT_LIMIT
 
 
 def _norm(text):
@@ -103,6 +109,25 @@ def process(text, root):
     return "\n".join(lines), results
 
 
+def split_note(text):
+    """Return (new_text, calls). Counts `### D-NN` items under `## Needs your call`, stopping at
+    the next `## ` heading or the collapsed FYI `<details>`; adds the split note under the
+    heading when calls exceed SPLIT_LIMIT and the ledger has no such note yet."""
+    lines = text.split("\n")
+    start = next((i for i, raw in enumerate(lines) if CALLS_HEADING.match(raw)), None)
+    if start is None:
+        return text, 0
+    calls = 0
+    for raw in lines[start + 1:]:
+        if raw.startswith("## ") or raw.lstrip().startswith("<details"):
+            break
+        if ITEM.match(raw):
+            calls += 1
+    if calls > SPLIT_LIMIT and "consider splitting" not in text:
+        lines[start + 1:start + 1] = ["", "> " + SPLIT_LINE]
+    return "\n".join(lines), calls
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--ledger", required=True)
@@ -111,6 +136,7 @@ def main(argv=None):
     with open(args.ledger, encoding="utf-8") as f:
         text = f.read()
     new_text, results = process(text, args.root)
+    new_text, calls = split_note(new_text)
     if new_text != text:
         with open(args.ledger, "w", encoding="utf-8") as f:
             f.write(new_text)
@@ -121,6 +147,8 @@ def main(argv=None):
         " → downgraded %s" % ", ".join(items) if items else ""))
     for item, cite, reason in failures:
         print("- %s %s: %s" % (item or "(outside items)", cite, reason))
+    if calls > SPLIT_LIMIT:
+        print(SPLIT_LINE)
     return 0
 
 

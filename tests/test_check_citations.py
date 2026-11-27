@@ -112,6 +112,62 @@ class CheckCitationsTest(unittest.TestCase):
                                 self.root)
         self.assertEqual(results, [])
 
+    def test_fixture_with_eight_calls_has_no_split_line(self):
+        self.assertNotIn("consider splitting", self.proc.stdout)
+        self.assertNotIn("consider splitting", self.text)
+
+
+def ledger_with_calls(calls, fyi=3, note=""):
+    items = "\n".join("### D-%02d · Behavior · ✅ verified\nx\n**Status:** pending\n" % i
+                      for i in range(1, calls + 1))
+    fyis = "\n".join("### D-%02d · Unchanged · N/A\nx\n" % i
+                     for i in range(calls + 1, calls + fyi + 1))
+    return ("---\npr: 1\n---\n\n## Needs your call\n%s\n%s\n"
+            "<details><summary>Verified FYI</summary>\n\n%s\n</details>\n\n## Follow-ups\n"
+            % (note, items, fyis))
+
+
+class SplitNoteTest(unittest.TestCase):
+    """Regression: a 16-call ledger (16 calls, 2026-11-19) must say "consider splitting"."""
+
+    def test_eleven_calls_adds_note_under_heading(self):
+        text, calls = cc.split_note(ledger_with_calls(11))
+        self.assertEqual(calls, 11)
+        lines = text.splitlines()
+        heading = lines.index("## Needs your call")
+        self.assertEqual(lines[heading + 2], "> " + cc.SPLIT_LINE)
+        self.assertEqual(text.count("consider splitting"), 1)
+
+    def test_ten_calls_no_note_and_fyi_not_counted(self):
+        text, calls = cc.split_note(ledger_with_calls(10, fyi=5))
+        self.assertEqual(calls, 10)
+        self.assertNotIn("consider splitting", text)
+
+    def test_existing_note_not_duplicated_and_idempotent(self):
+        original = ledger_with_calls(16, note="> More than 10 calls — consider splitting this PR.\n")
+        text, calls = cc.split_note(original)
+        self.assertEqual(calls, 16)
+        self.assertEqual(text, original)
+        again, _ = cc.split_note(cc.split_note(ledger_with_calls(16))[0])
+        self.assertEqual(again.count("consider splitting"), 1)
+
+    def test_no_calls_heading(self):
+        self.assertEqual(cc.split_note("## Intent\nx\n"), ("## Intent\nx\n", 0))
+
+    def test_cli_prints_split_line(self):
+        tmp = tempfile.mkdtemp()
+        try:
+            ledger = os.path.join(tmp, "decisions.md")
+            with open(ledger, "w", encoding="utf-8") as f:
+                f.write(ledger_with_calls(16))
+            proc = subprocess.run([sys.executable, SCRIPT, "--ledger", ledger, "--root", tmp],
+                                  capture_output=True, text=True)
+            self.assertIn(cc.SPLIT_LINE, proc.stdout)
+            with open(ledger, encoding="utf-8") as f:
+                self.assertIn("> " + cc.SPLIT_LINE, f.read())
+        finally:
+            shutil.rmtree(tmp)
+
 
 if __name__ == "__main__":
     unittest.main()
