@@ -15,10 +15,15 @@ Confirm / Reject / Explain more / Develop further.
 
 ## Usage
 
-### Install
+### Requirements
 
-The repo is private: you need read access (ask the owner) and git credentials for GitHub
-(`gh auth login`, or an SSH key).
+- **Claude Code.** The "who decided what" evidence comes from Claude Code session transcripts,
+  the ledger is written by a Claude Code subagent, and triage uses its question dialogs. Other
+  agents (Codex, Cursor, …) are not supported yet.
+- `gh`, authenticated, for PR mode. Without it the skill reviews the local branch diff.
+- Python 3 (the scripts use the standard library only).
+
+### Install
 
 ```bash
 claude plugin marketplace add SedlarDavid/decision-review
@@ -47,7 +52,6 @@ summary to PR** so the reviewer sees the outcome. Run on someone else's PR (or o
 Claude Code), it still produces the behavior / unchanged / tests / scope items, but `made by` is
 `unknown` and transcript-only claims stay `❓ UNVERIFIED`.
 
-Needs `gh` (authenticated) for PR mode; without it the skill reviews the local branch diff.
 `vgv-wingspan` is optional: its `review.md` findings and `/vgv-wingspan:plan` hand-off are used
 when present.
 
