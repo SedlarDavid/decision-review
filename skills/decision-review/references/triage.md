@@ -4,21 +4,18 @@ Walk the reviewer through the ledger with `AskUserQuestion`, persist each answer
 `decisions.md`, then wrap up. The ledger file is the state: an interrupted triage resumes from
 the items whose `**Status:**` is still `pending`.
 
-## 1. Verified FYI — one bulk question
+Order: the calls first, the Verified FYI bulk question last. Opening with "accept N FYI items?"
+reads as a rubber stamp before the reviewer has seen anything that matters.
 
-FYI items marked `❓ UNVERIFIED` (downgraded by the citation check) never go in the bulk
-question: they join the "Needs your call" queue first. Skip the bulk question if no other FYI
-items are pending. Otherwise one `AskUserQuestion` (single question, header `FYI`):
+Before the first question of the triage — the first batch of calls, or the FYI question when
+there are no calls — say once: "Type `tool: …` in Other to note a problem with the ledger
+itself."
 
-- **Accept all (Recommended)** — every pending FYI item → `confirmed`.
-- **Pick some to inspect** — follow up with a `multiSelect: true` question listing the FYI items
-  (`D-NN · <Kind> · <Category>`, max 4 options per question; split into several questions if
-  more). Selected items join the "Needs your call" queue; the rest → `confirmed`.
+## 1. Needs your call — batches of four
 
-## 2. Needs your call — batches of four
-
-Queue = pending items under "Needs your call" (plus any FYI items picked above), in ledger
-order. Each `AskUserQuestion` call carries up to **four questions, one item each**.
+Queue = pending items under "Needs your call", plus any FYI item marked `❓ UNVERIFIED`
+(downgraded by the citation check), in ledger order. Each `AskUserQuestion` call carries up to
+**four questions, one item each**.
 
 Each question must stand alone — the reviewer may see only the dialog:
 
@@ -44,8 +41,17 @@ Each question must stand alone — the reviewer may see only the dialog:
   It is not an answer: from "Other", the item stays pending and is asked again; in an
   annotation, the picked option still applies.
 
-Before the first batch, say once: "Type `tool: …` in Other to note a problem with the ledger
-itself."
+## 2. Verified FYI — one bulk question, last
+
+Ask it once the calls queue is empty (Explain-more items are re-asked until answered first).
+Skip it if no FYI items are pending. Otherwise one `AskUserQuestion` (single question, header
+`FYI`):
+
+- **Accept all (Recommended)** — every pending FYI item → `confirmed`.
+- **Pick some to inspect** — follow up with a `multiSelect: true` question listing the FYI items
+  (`D-NN · <Kind> · <Category>`, max 4 options per question; split into several questions if
+  more). Selected items are asked in batches of four exactly as in step 1; the rest →
+  `confirmed`.
 
 ## 3. Persist after every batch
 
@@ -129,5 +135,6 @@ When no pending items remain:
 ## Resume
 
 When the skill starts and `decisions.md` exists for the same head SHA with pending items, it
-offers **Resume triage (Recommended)** / **Rebuild ledger** / **Exit**. Resume skips straight to
-this file's step 1 (FYI only if any FYI item is still pending) and asks only about pending items.
+offers **Resume triage (Recommended)** / **Rebuild ledger** / **Exit**. Resume starts at this
+file's step 1 with the pending calls, then step 2 if any FYI item is still pending, and asks
+only about pending items.

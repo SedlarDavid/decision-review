@@ -90,9 +90,11 @@ every code citation against the pinned checkout and downgrades the ones that don
    - VGV review findings from `docs/code-review/<slug>/review.md` in any worktree, or the
      FINDING lines in the transcript when the report is gone.
 4. A fresh `decision-ledger-agent` writes the ledger from those files only.
-5. `scripts/check_citations.py` verifies each code citation within ±3 lines.
-6. Triage: verified FYI items in one bulk question, the rest four per question; each answer is
-   written to the item's `**Status:**` line immediately, so an interrupted triage resumes.
+5. `scripts/check_citations.py` verifies each code citation within ±3 lines, and suggests
+   splitting the PR when there are more than 10 calls.
+6. Triage: the calls first, four per question, then the verified FYI items in one bulk question
+   at the end; each answer is written to the item's `**Status:**` line immediately, so an
+   interrupted triage resumes.
 7. Wrap-up: verdict line, one line in the run log (below), then fix on this branch / plan the
    follow-ups / post a summary comment (preview first, ledger lines only, extra permission
    prompt) / keep the report.

@@ -145,16 +145,18 @@ Do not add your own opinions of the PR to the prompt.
 4. Downgraded items stay where they are, with their ids; triage asks about every UNVERIFIED
    item individually, even inside Verified FYI. Recount `counts.unverified` in the frontmatter.
 5. Print a short summary: intent line, counts (needs call / FYI / unverified), evidence missing,
-   citation-check result, and the file path. If "Needs your call" has more than 10 items, repeat
-   the split recommendation.
+   citation-check result, and the file path. If the citation check printed
+   `More than 10 calls — consider splitting this PR.`, repeat that line verbatim. If this session
+   built the PR (you did not pass `--exclude-session` in step 4.3), end the summary with the
+   Explain-more warning from Gotchas.
 
 ## 7. Triage
 
 Keep `checkout` and `<scratch>/evidence` until triage ends — Explain more reads them. Follow
-`${CLAUDE_SKILL_DIR}/references/triage.md`: FYI bulk question, batches of four
-Confirm / Reject / Explain more / Develop further questions, persist Status lines after every
-batch, `tool:` notes about the ledger itself, Explain-more loop, wrap-up verdict, run log and
-next-step menu.
+`${CLAUDE_SKILL_DIR}/references/triage.md`: batches of four Confirm / Reject / Explain more /
+Develop further questions for the calls first, the Verified FYI bulk question last, persist
+Status lines after every batch, `tool:` notes about the ledger itself, Explain-more loop,
+wrap-up verdict, run log and next-step menu.
 
 ## 8. Clean up
 
@@ -171,7 +173,10 @@ session scratchpad only — never copy `session.md` into the repo or a PR.
 - **Worktree sessions** are filed under their own `~/.claude/projects/` folder;
   `find_sessions.py` searches all folders, so never pass it a folder derived from the cwd.
 - **Fresh session gives the best result.** The ledger agent is fresh either way, but triage's
-  Explain-more answers come from this session — say so once if this session built the PR.
+  Explain-more answers come from this session. If this session built the PR, print once (step
+  6.5): "This session built the PR, so Explain-more answers come from it and may defend its own
+  choices. For an independent explanation, rerun /decision-review in a fresh session." It is a
+  warning, never a feature: don't offer answering from your own context as an advantage.
 - **Codegraph/LSP** describe the user's working tree, not the PR head — don't use them for claims
   about the PR; read `checkout` directly.
 - **Secrets**: transcripts can contain tokens and passwords. Only the redacted digest is read; a
